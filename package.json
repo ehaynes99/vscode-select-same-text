@@ -1,0 +1,36 @@
+{
+	"name": "case-sensitive-add-selection",
+	"displayName": "Case Sensitive Add Selection",
+	"description": "case-sensitive version of the built-in addSelectionToNextFindMatch",
+	"version": "0.0.1",
+	"publisher": "ehaynes",
+	"engines": {
+		"vscode": "^1.33.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.caseSensitiveAddSelectionToNextFindMatch"
+	],
+	"main": "./src/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.caseSensitiveAddSelectionToNextFindMatch",
+				"title": "Case Sensitive Add Selection To Next Find Match"
+			}
+		]
+	},
+	"scripts": {
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28",
+		"eslint": "^5.13.0",
+		"@types/node": "^10.12.21",
+		"@types/mocha": "^2.2.42"
+	}
+}
