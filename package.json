@@ -4,6 +4,8 @@
 	"description": "case-sensitive version of the built-in addSelectionToNextFindMatch",
 	"version": "0.0.1",
 	"publisher": "ehaynes",
+	"author": "Eric Haynes",
+	"repository": "https://github.com/ehaynes99/vscode-case-sensitive-add-selection.git",
 	"engines": {
 		"vscode": "^1.33.0"
 	},
@@ -23,14 +25,16 @@
 		]
 	},
 	"scripts": {
+		"package": "vsce package",
 		"postinstall": "node ./node_modules/vscode/bin/install",
 		"test": "node ./node_modules/vscode/bin/test"
 	},
 	"devDependencies": {
-		"typescript": "^3.3.1",
-		"vscode": "^1.1.28",
-		"eslint": "^5.13.0",
+		"@types/mocha": "^2.2.42",
 		"@types/node": "^10.12.21",
-		"@types/mocha": "^2.2.42"
+		"eslint": "^5.13.0",
+		"typescript": "^3.3.1",
+		"vsce": "^1.59.0",
+		"vscode": "^1.1.28"
 	}
 }
