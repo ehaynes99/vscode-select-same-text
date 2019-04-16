@@ -1,11 +1,11 @@
 {
-	"name": "case-sensitive-add-selection",
-	"displayName": "Case Sensitive Add Selection",
+	"name": "case-sensitive-add-to-selection",
+	"displayName": "Case Sensitive Add to Selection",
 	"description": "case-sensitive version of the built-in addSelectionToNextFindMatch",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"publisher": "ehaynes",
 	"author": "Eric Haynes",
-	"repository": "https://github.com/ehaynes99/vscode-case-sensitive-add-selection.git",
+	"repository": "https://github.com/ehaynes99/vscode-case-sensitive-add-to-selection.git",
 	"engines": {
 		"vscode": "^1.33.0"
 	},
@@ -24,6 +24,12 @@
 			}
 		]
 	},
+	"keybindings": [
+		{
+			"command": "extension.caseSensitiveAddSelectionToNextFindMatch",
+			"when": "editorTextFocus"
+		}
+	],
 	"scripts": {
 		"package": "vsce package",
 		"postinstall": "node ./node_modules/vscode/bin/install",
@@ -32,7 +38,7 @@
 	"devDependencies": {
 		"@types/mocha": "^2.2.42",
 		"@types/node": "^10.12.21",
-		"eslint": "^5.13.0",
+		"eslint": "^5.16.0",
 		"typescript": "^3.3.1",
 		"vsce": "^1.59.0",
 		"vscode": "^1.1.28"
