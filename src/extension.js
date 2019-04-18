@@ -1,56 +1,84 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 
-const addSelection = (rowStart, colStart, rowEnd, colEnd) => {
-  const editor = vscode.window.activeTextEditor;
-  const start = new vscode.Position(rowStart, colStart);
-  const end = new vscode.Position(rowEnd, colEnd);
-  editor.selections = [
-    ...editor.selections,
-    new vscode.Selection(start, end),
-  ];
+const getText = range => {
+  return range && vscode.window.activeTextEditor.document.getText(range);
 };
 
-const addNext = () => {
+const getLast = array => array[array.length - 1];
+
+const getLastSelection = () => {
+  const { selections } = vscode.window.activeTextEditor;
+  return selections[selections.length - 1];
+};
+
+const selectedText = () => {
+  const { document, selection } = vscode.window.activeTextEditor;
+  return document.getText(selection);
+};
+
+const search = (start, end) => {
+  const range = new vscode.Range(start, end);
   const editor = vscode.window.activeTextEditor;
-  if (editor) {
-    addSelection(2, 6, 2, 9);
-    console.log('***** editor.selections:', editor.selections);
+  const { document } = editor;
+  const searchText = selectedText();
+
+  const text = document.getText(
+    new vscode.Range(new vscode.Position(0, 0), range.end)
+  );
+  const startIndex = document.offsetAt(range.start);
+  const index = text.indexOf(searchText, startIndex);
+
+  if (index >= 0) {
+    const newSelection = new vscode.Selection(
+      document.positionAt(index),
+      document.positionAt(index + searchText.length)
+    );
+    editor.selections = [...editor.selections, newSelection];
+    return true;
   }
 };
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+const searchStartToFirst = () => {
+  const { selections } = vscode.window.activeTextEditor;
+  const start = new vscode.Position(0, 0);
+  const end = selections[0].start;
+  return search(start, end);
+};
 
-/**
- * @param {vscode.ExtensionContext} context
- */
-function activate(context) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  console.log(
-    'Congratulations, your extension "case-sensitive-add-to-selection" is now active!'
-  );
+const searchLastToEnd = () => {
+  const { document } = vscode.window.activeTextEditor;
+  const start = getLastSelection().end;
+  const end = document.lineAt(document.lineCount - 1).range.end;
+  return search(start, end);
+};
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with  registerCommand
-  // The commandId parameter must match the command field in package.json
+const searchLastToFirst = () => {
+  const { selections } = vscode.window.activeTextEditor;
+  if (selections.length > 1) {
+    const start = getLastSelection().end;
+    const end = selections[0].start;
+
+    if (start.isBefore(end)) {
+      search(start, end);
+      return true;
+    }
+  }
+};
+
+const addNext = () => {
+  searchLastToFirst() || searchLastToEnd() || searchStartToFirst();
+};
+
+const activate = context => {
   let disposable = vscode.commands.registerCommand(
     'extension.caseSensitiveAddSelectionToNextFindMatch',
-    function() {
-      // The code you place here will be executed every time your command is executed
-
-      try {
-        addNext();
-      } catch (error) {
-        console.error(error);
-      }
+    () => {
+      addNext();
     }
   );
 
   context.subscriptions.push(disposable);
-}
+};
 exports.activate = activate;
 
 // this method is called when your extension is deactivated
