@@ -12,20 +12,13 @@ const testLocations = [
 
 // positions of the term 'are\nnot'
 const areNotLocations = [
-  new vscode.Selection(2, 20, 3, 15),
+  new vscode.Selection(2, 20, 3, 2),
   new vscode.Selection(4, 22, 5, 2),
 ];
 
 const addNext = () => {
   vscode.commands.executeCommand(
     'extension.caseSensitiveAddSelectionToNextFindMatch'
-  );
-};
-
-const printSelections = () => {
-  console.log(
-    '***** editor.selections:',
-    JSON.stringify(vscode.window.activeTextEditor.selections, null, 2)
   );
 };
 
@@ -73,15 +66,21 @@ suite('Extension Tests', () => {
 
   test('it selects in the same direction as the initial selection', async () => {
     const editor = await setup();
-		editor.selections = [reverse(testLocations[0])];
-		addNext();
-		await sleep();
+    editor.selections = [reverse(testLocations[0])];
+    addNext();
+    await sleep();
 
-		const expected = [
-			reverse(testLocations[0]),
-			reverse(testLocations[1]),
-		];
-		assert.deepEqual(editor.selections, expected);
+    const expected = [reverse(testLocations[0]), reverse(testLocations[1])];
+    assert.deepEqual(editor.selections, expected);
+  });
+
+  test('it finds matches when search term is multiline', async () => {
+    const editor = await setup();
+    editor.selections = [areNotLocations[0]];
+    addNext();
+    await sleep();
+
+    assert.deepEqual(editor.selections, areNotLocations);
   });
 
   const setup = async () => {
@@ -108,6 +107,6 @@ suite('Extension Tests', () => {
 // lame... there has to be some way to ensure the action is done...
 const sleep = () => {
   return new Promise(resolve => {
-    setTimeout(resolve, 150);
+    setTimeout(resolve, 200);
   });
 };
