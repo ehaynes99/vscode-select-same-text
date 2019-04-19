@@ -1,11 +1,5 @@
 const vscode = require('vscode');
 
-const getText = range => {
-  return range && vscode.window.activeTextEditor.document.getText(range);
-};
-
-const getLast = array => array[array.length - 1];
-
 const getLastSelection = () => {
   const { selections } = vscode.window.activeTextEditor;
   return selections[selections.length - 1];

@@ -17,7 +17,8 @@ const testRunner = require('vscode/lib/testrunner');
 // for more info
 testRunner.configure({
 	ui: 'tdd', 		// the TDD UI is being used in extension.test.js (suite, test, etc.)
-	useColors: true // colored output from test results
+	useColors: true, // colored output from test results
+	timeout: 11000,
 });
 
 module.exports = testRunner;
