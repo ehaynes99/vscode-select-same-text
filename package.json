@@ -3,7 +3,7 @@
 	"displayName": "Select Same Text",
 	"description": "Multi-select the next exact occurrence of the selected text",
 	"version": "1.0.0",
-	"publisher": "ehaynes",
+	"publisher": "ehaynes99",
 	"author": "Eric Haynes",
 	"repository": "https://github.com/ehaynes99/vscode-select-same-text.git",
 	"license": "MIT",
