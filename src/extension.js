@@ -13,7 +13,7 @@ const selectedText = () => {
 const search = (start, end) => {
   const range = new vscode.Range(start, end);
   const editor = vscode.window.activeTextEditor;
-  const { document } = editor;
+  const { document, selections } = editor;
   const searchText = selectedText();
 
   const text = document.getText(
@@ -23,10 +23,14 @@ const search = (start, end) => {
   const index = text.indexOf(searchText, startIndex);
 
   if (index >= 0) {
-    const newSelection = new vscode.Selection(
+    const bounds = [
       document.positionAt(index),
-      document.positionAt(index + searchText.length)
-    );
+      document.positionAt(index + searchText.length),
+    ];
+    if (selections[0].isReversed) {
+      bounds.reverse();
+    }
+    const newSelection = new vscode.Selection(bounds[0], bounds[1]);
     editor.selections = [...editor.selections, newSelection];
     return true;
   }

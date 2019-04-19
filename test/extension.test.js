@@ -71,8 +71,23 @@ suite('Extension Tests', () => {
     expectSelections(1, 2, 0);
   });
 
-  const getLocations = (...testLocationIndexes) => {
-    return testLocationIndexes.map(index => testLocations[index]);
+  test('it selects in the same direction as the initial selection', async () => {
+    const editor = await setup();
+		editor.selections = [reverse(testLocations[0])];
+		addNext();
+		await sleep();
+
+		const expected = [
+			reverse(testLocations[0]),
+			reverse(testLocations[1]),
+		];
+		assert.deepEqual(editor.selections, expected);
+  });
+
+  const setup = async () => {
+    const uri = vscode.Uri.file(path.join(__dirname, 'sample_text'));
+    const document = await vscode.workspace.openTextDocument(uri);
+    return await vscode.window.showTextDocument(document);
   };
 
   const expectSelections = (...testLocationIndexes) => {
@@ -81,10 +96,12 @@ suite('Extension Tests', () => {
     assert.deepEqual(selections, expected);
   };
 
-  const setup = async () => {
-    const uri = vscode.Uri.file(path.join(__dirname, 'sample_text'));
-    const document = await vscode.workspace.openTextDocument(uri);
-    return await vscode.window.showTextDocument(document);
+  const getLocations = (...testLocationIndexes) => {
+    return testLocationIndexes.map(index => testLocations[index]);
+  };
+
+  const reverse = selection => {
+    return new vscode.Selection(selection.active, selection.anchor);
   };
 });
 
