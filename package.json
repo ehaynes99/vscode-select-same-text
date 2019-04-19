@@ -2,7 +2,7 @@
 	"name": "vscode-select-same-text",
 	"displayName": "Select Same Text",
 	"description": "Multi-select the next exact occurrence of the selected text",
-	"version": "0.0.10",
+	"version": "1.0.0",
 	"publisher": "ehaynes",
 	"author": "Eric Haynes",
 	"repository": "https://github.com/ehaynes99/vscode-select-same-text.git",
@@ -23,14 +23,16 @@
 				"command": "extension.selectSameText",
 				"title": "Select Same Text"
 			}
+		],
+		"keybindings": [
+			{
+				"command": "extension.selectSameText",
+				"mac": "cmd+shift+d",
+				"key": "ctrl+shift+d",
+				"when": "editorTextFocus"
+			}
 		]
 	},
-	"keybindings": [
-		{
-			"command": "extension.selectSameText",
-			"when": "editorTextFocus"
-		}
-	],
 	"scripts": {
 		"package": "vsce package",
 		"postinstall": "node ./node_modules/vscode/bin/install",

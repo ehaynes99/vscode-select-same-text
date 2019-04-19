@@ -5,8 +5,7 @@ The built-in command **Add Selection To Next Find Match** (`editor.action.addSel
 honors the settings of the find dialog (case-sensitivity, whole-word, etc.). This extension adds a command to multi-select the next occurrence of the exact, case sensitive text that is currently selected.
 
 # Usage
-
-OPTIONAL: bind to a key, and/or replace binding of `cmd+d` or `ctrl+d` as the command `Select Same Text`
+By default, the extension is bound to `cmd+shift+d` on mac, or `ctrl+shift+d` on windows/linux. To rebind, in keyboard shortcuts, change the binding for `Select Same Text`.
 
 ## Behavior:
 * Does nothing if no text is selected
