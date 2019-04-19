@@ -18,7 +18,7 @@ const areNotLocations = [
 
 const addNext = () => {
   vscode.commands.executeCommand(
-    'extension.caseSensitiveAddSelectionToNextFindMatch'
+    'extension.selectSameText'
   );
 };
 

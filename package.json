@@ -1,11 +1,12 @@
 {
-	"name": "case-sensitive-add-to-selection",
-	"displayName": "Case Sensitive Add to Selection",
-	"description": "case-sensitive version of the built-in addSelectionToNextFindMatch",
-	"version": "0.0.7",
+	"name": "vscode-select-same-text",
+	"displayName": "Select Same Text",
+	"description": "Multi-select the next exact occurrence of the selected text",
+	"version": "0.0.9",
 	"publisher": "ehaynes",
 	"author": "Eric Haynes",
-	"repository": "https://github.com/ehaynes99/vscode-case-sensitive-add-to-selection.git",
+	"repository": "https://github.com/ehaynes99/vscode-select-same-text.git",
+	"license": "MIT",
 	"engines": {
 		"vscode": "^1.33.0"
 	},
@@ -13,20 +14,20 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.caseSensitiveAddSelectionToNextFindMatch"
+		"onCommand:extension.selectSameText"
 	],
 	"main": "./src/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.caseSensitiveAddSelectionToNextFindMatch",
+				"command": "extension.selectSameText",
 				"title": "Case Sensitive Add Selection To Next Find Match"
 			}
 		]
 	},
 	"keybindings": [
 		{
-			"command": "extension.caseSensitiveAddSelectionToNextFindMatch",
+			"command": "extension.selectSameText",
 			"when": "editorTextFocus"
 		}
 	],

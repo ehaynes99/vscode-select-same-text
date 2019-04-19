@@ -69,7 +69,7 @@ const addNext = () => {
 
 const activate = context => {
   let disposable = vscode.commands.registerCommand(
-    'extension.caseSensitiveAddSelectionToNextFindMatch',
+    'extension.selectSameText',
     () => {
       addNext();
     }
