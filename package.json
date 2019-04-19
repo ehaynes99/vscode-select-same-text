@@ -2,7 +2,7 @@
 	"name": "vscode-select-same-text",
 	"displayName": "Select Same Text",
 	"description": "Multi-select the next exact occurrence of the selected text",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"publisher": "ehaynes",
 	"author": "Eric Haynes",
 	"repository": "https://github.com/ehaynes99/vscode-select-same-text.git",
@@ -21,7 +21,7 @@
 		"commands": [
 			{
 				"command": "extension.selectSameText",
-				"title": "Case Sensitive Add Selection To Next Find Match"
+				"title": "Select Same Text"
 			}
 		]
 	},
