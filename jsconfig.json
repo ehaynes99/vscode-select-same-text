@@ -3,7 +3,6 @@
 		"module": "commonjs",
 		"baseUrl": "./src",
 		"target": "esnext",
-		"checkJs": true,  /* Typecheck .js files. */
 		"lib": [
 			"es6"
 		]
