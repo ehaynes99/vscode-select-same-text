@@ -17,9 +17,12 @@ const areNotLocations = [
 ];
 
 const addNext = () => {
-  vscode.commands.executeCommand(
-    'extension.selectSameText'
-  );
+  vscode.commands.executeCommand('extension.selectSameText');
+  return new Promise(resolve => {
+    // there *must* be a better way to do this...
+    const sleepTime = 200;
+    setTimeout(resolve, sleepTime);
+  });
 };
 
 // Defines a Mocha test suite to group tests of similar kind together
@@ -27,8 +30,7 @@ suite('Extension Tests', () => {
   test('it searches to the end of the document', async () => {
     const editor = await setup();
     editor.selections = [testLocations[1]];
-    addNext();
-    await sleep();
+    await addNext();
 
     expectSelections(1, 2);
 
@@ -40,8 +42,7 @@ suite('Extension Tests', () => {
   test('it searches from the start of the document', async () => {
     const editor = await setup();
     editor.selections = [testLocations[2]];
-    addNext();
-    await sleep();
+    await addNext();
 
     expectSelections(2, 0);
   });
@@ -49,8 +50,7 @@ suite('Extension Tests', () => {
   test('it searches between the selections', async () => {
     const editor = await setup();
     editor.selections = getLocations(2, 0);
-    addNext();
-    await sleep();
+    await addNext();
 
     expectSelections(2, 0, 1);
   });
@@ -58,8 +58,7 @@ suite('Extension Tests', () => {
   test('it does not add duplicates once all matches are found', async () => {
     const editor = await setup();
     editor.selections = getLocations(1, 2, 0);
-    addNext();
-    await sleep();
+    await addNext();
 
     expectSelections(1, 2, 0);
   });
@@ -67,8 +66,7 @@ suite('Extension Tests', () => {
   test('it selects in the same direction as the initial selection', async () => {
     const editor = await setup();
     editor.selections = [reverse(testLocations[0])];
-    addNext();
-    await sleep();
+    await addNext();
 
     const expected = [reverse(testLocations[0]), reverse(testLocations[1])];
     assert.deepEqual(editor.selections, expected);
@@ -77,14 +75,23 @@ suite('Extension Tests', () => {
   test('it finds matches when search term is multiline', async () => {
     const editor = await setup();
     editor.selections = [areNotLocations[0]];
-    addNext();
-    await sleep();
+    await addNext();
 
     assert.deepEqual(editor.selections, areNotLocations);
   });
 
-  const setup = async () => {
-    const uri = vscode.Uri.file(path.join(__dirname, 'sample_text'));
+  test('it reveals the new selection in the editor', async () => {
+    const editor = await setup();
+    const selection = (editor.selections = [new vscode.Selection(4, 0, 4, 3)]);
+    const nextMatchStart = new vscode.Position(75, 0);
+    await addNext();
+    assert.equal(editor.selections[1].start.isEqual(nextMatchStart), true);
+    const visibleRange = editor.visibleRanges[0];
+    assert.equal(visibleRange.contains(nextMatchStart), true);
+  });
+
+  const setup = async (file = 'sample_text') => {
+    const uri = vscode.Uri.file(path.join(__dirname, file));
     const document = await vscode.workspace.openTextDocument(uri);
     return await vscode.window.showTextDocument(document);
   };
