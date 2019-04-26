@@ -1,6 +1,8 @@
 # Select Same Text
 `vscode-select-same-text`
 
+https://marketplace.visualstudio.com/items?itemName=ehaynes99.vscode-select-same-text
+
 The built-in command **Add Selection To Next Find Match** (`editor.action.addSelectionToNextFindMatch`) has oft-undesirable behavior in that it
 honors the settings of the find dialog (case-sensitivity, whole-word, etc.). This extension adds a command to multi-select the next occurrence of the exact, case sensitive text that is currently selected.
 
